@@ -272,10 +272,10 @@
     <main class="w-full max-w-3xl mx-auto z-10 relative">
 
         <div class="text-center mb-8 animate-fade-up">
+            <!-- 1. לוגו אמסלם עליון -->
             <div class="flex justify-center items-center gap-5 sm:gap-7 mb-7">
                 <img src="Amsalem_Logo NO SLOGAN (10).png" alt="Amsalem Global Travel Management" class="logo-hero h-11 sm:h-14 md:h-16 w-auto drop-shadow-sm" onerror="this.style.display='none'">
                 <div class="h-14 sm:h-16 md:h-20 w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent"></div>
-                <!-- סמל גביע גנרי ויוקרתי -->
                 <svg class="logo-hero delay-1 h-14 sm:h-16 md:h-20 w-auto drop-shadow-md text-amber-500" viewBox="0 0 512 512" fill="url(#goldGradientCup)">
                     <defs>
                         <linearGradient id="goldGradientCup" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -288,8 +288,12 @@
                 </svg>
             </div>
 
+            <!-- 2. לוגו Winner האמצעי -->
             <div class="mb-5">
-                <img src="image_4e5e82.png" alt="Amsalem Winner" class="mx-auto h-10 sm:h-12 md:h-16 w-auto object-contain mb-2 drop-shadow-sm" style="mix-blend-mode: multiply;" onerror="this.style.display='none'">
+                <img src="amsalem-winner-logo.png" alt="Amsalem Winner" class="mx-auto h-10 sm:h-12 md:h-16 w-auto object-contain mb-2 drop-shadow-sm" style="mix-blend-mode: multiply;" onerror="this.style.display='none'; document.getElementById('fallback-winner-title').style.display='block';">
+                <h1 id="fallback-winner-title" style="display:none;" class="text-4xl md:text-5xl lg:text-6xl font-black text-brand-dark mb-2 tracking-tight font-sport italic">
+                    AMSALEM<span class="text-brand-primary">WINNER</span>
+                </h1>
                 <h2 class="text-xl md:text-3xl font-bold text-slate-700 mt-1 tracking-tight">
                     חגיגת גמר המונדיאל
                 </h2>
@@ -544,6 +548,7 @@
                         </button>
 
                         <div class="flex items-center justify-center gap-2 mt-6 pt-4 border-t border-slate-200/70">
+                            <!-- 3. לוגו אמסלם תחתון -->
                             <img src="Amsalem_Logo NO SLOGAN (10).png" alt="Amsalem" class="h-5 sm:h-6 w-auto opacity-60 grayscale" onerror="this.style.display='none'">
                             <span class="text-[10px] sm:text-xs text-slate-400 font-semibold">פעילות פנימית לעובדי אמסלם בלבד</span>
                         </div>
@@ -558,9 +563,8 @@
 
     <script>
         const CONFIG = {
-            // Using a dummy URL for the preview to prevent real submissions
-            WEBHOOK_URL: "PREVIEW_MODE_NO_SUBMISSION",
-            STORAGE_KEY: "amsalem_ticket_2026_preview"
+            WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbx257nWJx-DE4iT-YwB3AI6dkzMY1JMm1Z5oRIjibeKWLdYad9gyoLiEWm0ho3Hse5d/exec",
+            STORAGE_KEY: "amsalem_ticket_2026"
         };
 
         const finalDate = new Date("2026-07-19T22:00:00+03:00").getTime();
@@ -820,6 +824,7 @@
                     <div class="w-full max-w-xs mx-auto mt-auto relative z-10 pt-4 border-t border-dashed border-slate-200">
                         <div class="barcode-mock rounded"></div>
                         <div class="text-[10px] text-slate-400 mt-2 tracking-widest font-mono">ID: ${escapeHtml(payload.ticketId) || Date.now().toString().slice(-8)}</div>
+                        <!-- 4. לוגו אמסלם בתוך כרטיס ההצלחה -->
                         <img src="Amsalem_Logo NO SLOGAN (10).png" alt="Amsalem" class="h-5 w-auto mx-auto mt-3 opacity-50 grayscale" onerror="this.style.display='none'">
                     </div>
 
@@ -832,6 +837,12 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // הגנה חכמה: בודק אם שכחת להכניס את כתובת השרת
+            if (CONFIG.WEBHOOK_URL.includes("YOUR_GOOGLE_APPS_SCRIPT") || CONFIG.WEBHOOK_URL === "PREVIEW_MODE_NO_SUBMISSION") {
+                showMessage("שגיאה: חסרה כתובת שרת. אנא פתח את הקוד והכנס את כתובת ה-Apps Script שלך בשורה 318.", "error");
+                return;
+            }
 
             if (isTimeUp) {
                 showMessage("הזמן עבר. לא ניתן לשלוח ניחושים נוספים.", "error");
@@ -877,21 +888,64 @@
                 userAgent: navigator.userAgent
             };
 
-            // SIMULATING SERVER RESPONSE FOR PREVIEW PURPOSES
-            setTimeout(() => {
-                const simulatedResult = { status: 'ok', row: Math.floor(Math.random() * 1000) + 100 };
-                
-                payload.ticketId = `AW-${simulatedResult.row}`;
-                const storedPayload = { ...payload };
-                storedPayload.phone = '******' + phoneKey.slice(-4);
-                delete storedPayload.userAgent;
-                try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(storedPayload)); } catch(storageError) {}
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); 
 
-                shootConfetti(); 
-                submitBtn.classList.add('success-state');
-                renderSuccessCard(payload);
-                window.scrollTo({ top: document.getElementById('ticket-container').offsetTop - 20, behavior: 'smooth' });
-            }, 1500);
+            try {
+                // תקשורת אמיתית מול השרת
+                const response = await fetch(CONFIG.WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload),
+                    signal: controller.signal
+                });
+
+                let result;
+                try {
+                    result = await response.json();
+                } catch (parseError) {
+                    showMessage("התקבלה תשובה לא צפויה מהשרת. ייתכן שהניחוש נקלט - נסו לשלוח שוב; אם תופיע הודעת כפילות, הניחוש שלכם כבר נשמר.", "duplicate");
+                    resetFormState();
+                    return;
+                }
+
+                if (result.status === 'ok') {
+                    payload.ticketId = result.row ? `AW-${result.row}` : Date.now().toString().slice(-8);
+                    const storedPayload = { ...payload };
+                    storedPayload.phone = '******' + phoneKey.slice(-4);
+                    delete storedPayload.userAgent;
+                    try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(storedPayload)); } catch(storageError) {}
+
+                    shootConfetti(); 
+                    submitBtn.classList.add('success-state');
+                    renderSuccessCard(payload);
+                    window.scrollTo({ top: document.getElementById('ticket-container').offsetTop - 20, behavior: 'smooth' });
+                } else if (result.status === 'timeout') {
+                    isTimeUp = true;
+                    document.getElementById("countdown-title").innerText = "המשחק החל - ההצבעה נסגרה";
+                    showMessage("הזמן עבר. המשחק כבר החל (על פי שעת השרת).", "error");
+                    document.querySelectorAll('.btn-action').forEach(b => b.disabled = true);
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'ההצבעה נסגרה';
+                    btnIcon.classList.add('hidden');
+                    loadingSpinner.classList.add('hidden');
+                } else if (result.status === 'duplicate') {
+                    showMessage("שים לב: כבר קיים במערכת ניחוש עם מספר הטלפון הזה. אם הזנת מספר שגוי בטעות - ניתן לתקן ולשלוח שוב.", "duplicate");
+                    resetFormState();
+                } else {
+                    showMessage(result.message || "אירעה שגיאה. אנא נסה שוב.", "error");
+                    resetFormState();
+                }
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    showMessage("השרת מטפל בעומס כרגע. לחץ שוב על 'זה הניחוש שלי' כדי לנסות שוב.", "error");
+                } else {
+                    showMessage("שגיאת תקשורת עם השרת. ייתכן שהניחוש נקלט בכל זאת - נסו שוב; אם תופיע הודעת כפילות, הניחוש כבר נשמר.", "error");
+                }
+                resetFormState();
+            } finally {
+                clearTimeout(timeoutId);
+            }
         });
 
         function resetFormState() {
