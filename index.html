@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Amsalem Winner - ניחוש תוצאת גמר המונדיאל 2026. פעילות פנימית לעובדי אמסלם.">
+    <meta name="theme-color" content="#0a1628">
+    <meta name="robots" content="noindex">
     <title>Amsalem Winner - חגיגת גמר המונדיאל</title>
-    
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Kanit:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
-    
+
     <!-- ספריות לייצור PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -279,7 +284,7 @@
         <div class="text-center mb-8 animate-fade-up">
             <!-- 1. לוגו אמסלם עליון -->
             <div class="flex justify-center items-center gap-5 sm:gap-7 mb-7">
-                <img src="Amsalem_Logo NO SLOGAN (10).png" alt="Amsalem Global Travel Management" class="logo-hero h-11 sm:h-14 md:h-16 w-auto drop-shadow-sm" onerror="this.style.display='none'">
+                <img data-amsalem-logo alt="Amsalem Global Travel Management" class="logo-hero h-11 sm:h-14 md:h-16 w-auto drop-shadow-sm">
                 <div class="h-14 sm:h-16 md:h-20 w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent"></div>
                 <svg class="logo-hero delay-1 h-14 sm:h-16 md:h-20 w-auto drop-shadow-md text-amber-500" viewBox="0 0 512 512" fill="url(#goldGradientCup)">
                     <defs>
@@ -495,17 +500,17 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-8">
                             <div>
                                 <label for="fullName" class="block text-sm font-bold text-slate-600 mb-1">שם מלא</label>
-                                <input type="text" id="fullName" name="fullName" required placeholder="הזן שם מלא" autocomplete="name"
+                                <input type="text" id="fullName" name="fullName" required placeholder="הזן שם מלא" autocomplete="name" maxlength="60"
                                     class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all shadow-sm">
                             </div>
                             <div>
                                 <label for="phone" class="block text-sm font-bold text-slate-600 mb-1">מספר נייד</label>
-                                <input type="tel" id="phone" name="phone" required placeholder="050-1234567" dir="ltr" inputmode="tel" pattern="[0-9\-\+]*" autocomplete="tel"
+                                <input type="tel" id="phone" name="phone" required placeholder="050-1234567" dir="ltr" inputmode="tel" pattern="[0-9\-\+ ]*" autocomplete="tel" maxlength="15"
                                     class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all text-left shadow-sm">
                             </div>
                             <div class="md:col-span-2">
                                 <label for="department" class="block text-sm font-bold text-slate-600 mb-1">מחלקה / סניף</label>
-                                <input type="text" id="department" name="department" required placeholder="לדוגמא: צוות 24/7, מחלקת ויזות...." autocomplete="organization-title"
+                                <input type="text" id="department" name="department" required placeholder="לדוגמא: צוות 24/7, מחלקת ויזות...." autocomplete="organization-title" maxlength="60"
                                     class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all shadow-sm">
                             </div>
                         </div>
@@ -554,7 +559,7 @@
 
                         <div class="flex items-center justify-center gap-2 mt-6 pt-4 border-t border-slate-200/70">
                             <!-- 3. לוגו אמסלם תחתון -->
-                            <img src="Amsalem_Logo NO SLOGAN (10).png" alt="Amsalem" class="h-5 sm:h-6 w-auto opacity-60 grayscale" onerror="this.style.display='none'">
+                            <img data-amsalem-logo alt="Amsalem" class="h-5 sm:h-6 w-auto opacity-60 grayscale">
                             <span class="text-[10px] sm:text-xs text-slate-400 font-semibold">פעילות פנימית לעובדי אמסלם בלבד</span>
                         </div>
 
@@ -571,6 +576,16 @@
             WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbx257nWJx-DE4iT-YwB3AI6dkzMY1JMm1Z5oRIjibeKWLdYad9gyoLiEWm0ho3Hse5d/exec",
             STORAGE_KEY: "amsalem_ticket_2026"
         };
+
+        // לוגו אמסלם מוטמע בקובץ - ללא תלות בקבצים חיצוניים
+        const AMSALEM_LOGO = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYgAAABLCAYAAABqSBCIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAGydJREFUeNrsnXl8HGX9x98zs5ujadokve+7QMvRAqUH/KgHeCAqKAr4k8sbkMtyCT8FOaQICniBIAoKKqgIP1AQ+IGKUMtNgdJS2tCmR9o0bdqkOXZ3Zn5/fJ/QNGw2u7Mzs7Pb5/N67StpujPPzDPPPJ/v/TXOOfcC9mIMAY4EFgD7A1OBWsDo57g4sBGYC+zIZqB4MsHGMRNZcvjHcA0Dw3VLdlKT8TJmvPECB762hGS8DA0NjeJEbC+975nAt4DjgDqP58iGSACwbJvWQTW8fOhCHMvCtG298jQ0NDRBRPB+LwauAPIVbbNSAQzXxcBl2UELaBtYQzzZpVedhoaGJoiIYQpwF3BEqBOcSrJ85hzWj5uqyUFDQ0MTRAQxBvgbMD3MQcsSXby9zyzeOGgelp3Uq01DQ6OoYO4F9zi6EOQQTyVpGD+VZbMXYDp2STulNTQ0NEEUK24FDgzgvH06qOPJBI0jx7F0wUdwDBPDcfRK09DQ0AQRMdwIfCqgc7ukcVTHUil2Dq7jhbkfwjYtTEdHLGloaGiCiBrOBxYFeH5HfXZPpmPTVV7B0vlH015VjWWn9ArT0NDQBBExfAj4fpgDSjirwctzFtI8ZCSxpHZKa2hoaIKIGg4E/gxUhjloPJlgxX6zWTdhug5n1dDQ0AQRQdQCvwJqwiaHhvFTWb7/HGLJhF5VGhoaJYFSyoOoBP4AHBI2ObRV1/DKIUfiGAZW/xFLI5BkvVHAOuDvQLYqh6VI3QVSPUhxITAIeAF4S/29Qo0zG3gDeFQvdw0Njb2VIBYDHwljIMN1MVwHy7bdltqhvHzoB2gfMJBY6n1+B0PNcTXwX8CpwAfVpt6NF4H7gGVAUhHHvkjexjCgHCkOGFfniiPO8TeAVuAoYII6VxvwV/XzSGCa+nsK+AlieksBnUALsFP9nlLE46hr0NDQ0CgZglgEnOs3CVh2CsN1cY3dKQ+uYZIsKyMRLy9bP37qsLdmHNKWipd1k8M44GBgFnCQ+vcgYCh9FwU8VH1yxYw0fxsInNjHc75AfVAaSAewS5FJl9JOUsBa4HlFXCuBd+gVrdX/5Bk4lqXfLg0NTRAFx/FIvoNvxBBLJekqr2TT6Im01A0jUVaOg4ETi9FVXkH7gGo6KwcMScTLl5quc7uVSq5S2stxwIAimDNDXecApaX0xH7AxxSJPAn8Q32ey+bEjmliuC5VbTv3IFYNDQ1NEGHjMOCXuR5k2TaGa+MaZg9iAMN1SJaV0zBhOm/NOJjtdcOQ4FUldKu0ONNxlIkpNQy4vETWQrPSJkYg/gsDeAl4CFiVzQnsWIx4IsEhS55g7Po1pGJx/YZpaGiCKAjGIE7puv40AnAxXFdt7LBtyDDWTdiH1uoaJU67WKkUlpNi56A6tg0ZAa5bSrkMzcAjwHJgE+JnqEXMVEcAS4HvID6JicBkxPdRjZif+g3NsmNxKjvaOGzJk4xsbCChGwVpaGiCKBAqgN8CkzIRg+nY2FYMO1ZGV0UluwZUs3HsJNaNn0aivCJtjSTTdbFSkSeGTcAGxMFchTiYDVFzcIB2YJva3F3gWuC1vqZK/ewuG7JSffqEaxjQw3xkWxZVba3Mf/Yxhmxt1OSgoaEJoqD4FRIN1Ac5OCTLKlh20Hx2Dq6jq7ySzsoqEmXluIZBeWc7lR27SFmxDPtlhs1Rfcdw+/Xdtqk5rsjwnR1qM+9+Hg5gq02/AnFyV/a6sG8Dd/e64G6CyLVsbNbfdywL27So6GxXZUQMXMOkLNHJvOcep6Zlq24xqqGhCaKguAI4OdMXLNtme3UNLXXD2DmojrKuDoY2bWRwSzODdzSTjJexbsJ0ttUNV1urgYv4FkzHxjUsicJ5zyy1p5nKcmxwXSdRXtFm2rarNnMTiQQq77FpPwecjTQrmokk8FlIBNFmJELoLXb3tbYUQbjsDpGtAUYiZctHI2GwtYo0Onps8IHVE3dME9uKMai1hQn1Kxi3dhWxVPI9srTsJGXJBEntc9DQ0ARRQJwIXNkfOTSOGs+bB8yldtsWDnh1CbXbmyjvbKezsoq395lF/eR9AYPa7U1U7WqlvLOdqvZWBrc0E0skcC2TbXUjaB4ygrZBtSTKyknF4iTiZcx5/ilGbloHLluWzT58wdqJ03fFE11xRRBlSuKvUxt5M1CviODvHu95J5JQFygcy8IxzLSRRwPa25i8ejlTVr3OgI5dpExrz+8ZBrapw1o1NEoNxjnnXlAs17oQyQbOWGPJcF06K6swXIcBu1qVBGzhmCbrJu5DZ0UltduaqG5tobyzg1gqoRLfJN/BNQxwwXQdHNMkWVZBMhYnUVFB28DBDG3aREXHLoANthWb/vz8o9sbxk8lnvC3/lK3nd/taVvq0XTIsaw9IqwsO+VJh3BME8e0GNzSTO32JgZ0tO3hm6noaGdEYwPVrS3YsRiOYeq3RkNDaxCRwjjgN2RRgM81DLWBu+8Ls5y0erkyIZk4pkjLtpV+Crq7OFipJLFkggHtbdQ2bxGntzrGdBzmPvc4lp3i3Un75k0SrmmKJG4YxJIJ4okuLDuFqyT7VCz2HonVNTczfcUrxFJJVk87gE2jJ+ICMTvZP1EYBrbSGCo625n29utMX/EK8VRyDxIS6pGkN+1b0NDQBBFF1CIlIsbnJH2ncTbbloWdY4bve1qF0MX7pG/TcTjk+aexrRheNQnZ/ONUdHUwurGeEZsbqNm+lfLOdizHxkWuQZzsIsEPbNtJWaITgBGbN9A4cixrpsykcdQEnJglmd1p2pzasTimYzN0yybGNbzDqA3vUrVrJ7YV0z4EDQ2NoiOIO4A5Ub24bpKY+9zjxJNdrJk8M/ty34ZBMhanLNHFfstfYmL9SgbtaMZwXTGL9fIHVHa07zFut1RvAKM3vMuojWtpGj6a1VMPYMPYyTgxCyuVxHBdbCuGa5qMWb+GaStfZWhTI5adwrZiOqFNQ0OjKAniOuCzUZ9EIQmb2S8+w66qQWweMZZ4P2W/7Vgcw3WYVL+CaStfpa55C45pZdys+2pe6sJ7xw3fvIFhWzbSNHwM9VNmsGHMJJLxcmpatrLv8pcYt+4dTMcmFYvjmNpspKGhUZwEcSZwabFMpGNamE6K+c8+xn8WfJTGkePSkoSYuWIM37yBGW++wMhN63Ax+rLxx5Cif1OQCKneNqM48Kr6QC+iGL5lA9trh9E+YCBDtjZK7kcs3p/GUI6UCJ9E+n4hcaSY3/J+psREihZOVffhJQzXyeORGEi125eAxn6+WwEci/i40o25Q83x+gIvs0py6+HSmUGuiAIMta6DLtqVYnd5/J7vlpVh3QWRLRvP8PzsNNcYNIYCCxAz/hrgP73vO6oE8QHg+mJjW8e0KO/s5NDnn+KZhZ9kx+C690iiOwKopqWZKateZ2L9CuKpZF92/0nAWcAxSOnvTJvC4p4EsZso5NHWbN9K7TZxrvfjaJ4JfEONObGfMS/JQBDV6tq/oM5Z6PjXFiTE+Gb1AqTDYOA2YEiG8+xUxPhbpMRL2J2hDKQu1kFq4+/vuxZSyPL5iAmkc5ES9XOQcjlVARNENXAN8NNef/+mWsetaeYuBTSpuXsQyWdyfLiWHyqLyK4+SGyjGvOPwCsBzsl4JF3gJCV0JBRRNwC3qE8qqgQxC3FKV0ecD9JKxKlYjKq2Vo74119ZOv8omoaNwbJTDN+8gXFr32ZswxrKuzpIxeLpyMFQi/ayHO4/o2QuTvmMe7SFlOK4MIfNvK8xjwDuUhpPVFCD5M98Ts3tjbnOocIgtbEdBZynNNwwN18Dya0ZnqPGEQWYwClq3mYXYPx09dqGIAmoI/s4Zl+kh8si4Gn1M99NexSS7NoX9gM+rNbp34DzgdU+z8V84HGkXM8Zivxa1bWdrMj0o+qd2R41gqgGbqefAnxRh5DEDg5/5lE2jJ1ERUc7IzetJZZKCTH0Lclfo8ghTInu18AXfTjXfkryGRnRx2ICNyjp7dY8z3Uw0pjpo8DLhRZKfPx+EBiuJNKToibM5YAPAs8AJwCPhbRWjwUOVIKNX4LIEOBe4Cng8+zZybIF+C5wvxrvJuD0KGU9VSjNIbIRS7nAtmLEE11MefsNxqyvf8/PkKFHwvdCJgfUIvCDHKqA30eYHHriasSEli+GKinvQDT6wgzErHdSCdxLlRKAjgpxzPFqjR3k0/muUkL49UrLP1S9s7OR3jB1SP24L6t9YU6UCOIq4OhSejtcwyAVj4s/IHPznE8i5bbDxNcQO6wf+IyPizhoDFHX6wdGAL9Qm0cUUciOTWOVNDqphF7pgUjC7pSQ1+sdPlhV4kor+QNiHn0Z8ct9Tv1+LOKDrAdeR4I7josKQSwCLtpLpayFwD0hv8yf9sHM0hMnFNmcf8jHc81D/C5RjBku1PsdQ5z5M0vwfR2l3tdBIY45R5FteR7nGKlI+wnEH/SC0uxWIa0DjkHMxGsR09MLwKwoEMSx+NgyNANSRCuiAyR65vaQF9soJKLDr2dfXoQbwRifz3cCUoJdQ3A6EolYqpiH+O7CxIfpp1BpFsKCwe4w1u7eMRXAw0hwUEJpD3H1vVihCWIWHlqGesRPkFLhUcL3gekhS3a/VpKEX6hSqncxIR6AxnYpEiGyt6Ma+NZecJ+fQcK5w8QliHPZC5qQvjOzehFGDIloegcJl08h0W8HACsKSRBjkLjuESGM9WwEF+0ZBVhg5yORN34iQfg5AfnCS2Ol/lChyHfoXk4QJylTxd6Aa0O+VwPxG3jRgNsR89IZiDn0e8B2xJT0AOIDfgCJpByHRG49VCiCiCvNYXwIYy1HYnqh8Elb3RiHRNOEra1dHsB524B3teAMwD7qBdub8bG96F5rkO6WYeabjEKSY73gGnX8NYos2hGfwxvAMsQX8Y46/7+ApwpFEHeGtJDakHCtDRFbWDfivx08E7qjL2oCOv+TRfZid6vXQeDrwKf2UnIoJ5rRbEEGgMwj/PD0LwJeGvm8CZyKBAQ9DUzr8X8xJMt7lfr91O4/ho2LEC960EgodSqolHWvZorz8W5H9Ir/QWyKQeFetWDzJaAdSs1Nqc0miESvuNJ4gkwi+7l6GVdHYL2FiaHAsDyOb1dCXTo4WcxPOgzi/eU0/MYiJST9M8S5/i6SEf1mjsf9BfgIkgO1Ur0LrYipfwSSi3Y20hI5dII4hfBqLF0A/CnA83t5WQ8gfNPS5xHnVpBYjZRRuDvP8wxW6vpXM2wUxYAxwI+BT0RgzYWJaryZWzYiUWBPIzWvDA/37mbQHjoDvu9KJNR5XvfGGgJqkPyIo0lf2ykTnkBMznOAQ9R7t14R3Lv0UivCwjzgZ4QT73+HkuKihDKk1EOYET+jgR+ENNZvgAmIsysfnIQkV50BvFXEJHEM8BX8jdIzIn7PXkx3DUii6GsUNyYiYahnhjjmfCTB1kvV6xSwRH0yPtCwJKp7CacA35+QLOGo4Sr8jyDqDzeqTTssXA0c54NKPxfJWTmhyDeNn6JDX/vDohIgh258A2W7DxEX4W/iZ+gEUY2kd08OYayVwLkRXDiHISaYMPF1pDpj2HgIydRel+d5Biqh4ttFIDn3hXLEpKpb9qVHM+Ha7cPADYRbisNEiiEOC+LkQZuYDCRT+IgQJqoesfluitiCGaLmoCLEMQ9SC7VQeBqxb/4OyQD1ijIkmXCOIrymItww/ktpjzrTOj1B7EgjGIzHP3+LifgFtoZ0T8MJxv+UCfsrkvhCsRHEYsKp5JhCbH+rI/gSXEW4oX+GmvdC99PYgpibbiX/irHHIzkGnwVWFOFGeCkSV/6o5oQ9kC4yawHS4CnlE0nEkTDU60K8r2OQxNwfhTjmyUgE0p/9Vk+CwleAi0OYGAfxOfw9gi/AJwk/W/oHRCdZqQ2JXLuU/DtyzUCam5xepJvhLYSfZW0W4TyZPYTXuA8fKEyC7HXA4SGPeavSJiK/gI5Cah+FgWsJv3BWNhitNoUwsZBo1sG5HvFL5Bu6Wque9RUUH6YRfhvdYiAIl9JEmdIgwsyyHua31hLEApqBlMMNw+Z+F/lVOAxaYgyzFn6dGjOqm8IjSLSFH6GrVyKNVIYX2abxJSTHQ2++pU0O3TisAELi0XjLsg6FIAYpCS+MAnzPII5LJ4KL+wt4C9HcCiz1eB03483XsQkp2BUGXkACFv7tw7k+DvyDYDPE+0Ib4lPwgmvwp6OdRrjYgreilF/Fu8N6s0cSvR6fAoP8JIg4cJ9izaCxGjiNwlcRTffw9lebtRdcB/xfjse0q83Sa/mSczyQUj7YhvhI/Ehk3E+RzYkhP/c4Ur5kmYdjhyvNtxyNYsIfkag8L7gZMY/mul/diPQ+97I+b8GHTod+EsRiwnGObkPs2fURXEQG4nvxEpP8OGI/zNU0NwP4ocfrvQeJeqgMeZ52IfVe/PCXDELybG4O8frjSGmCL7Nn4/dssZBwAjiijmKoL9UNG0nq2+Lh2KnAbeTuLN+KJN95STw9GB98dX4RxLcIzzl6FrkXqAoLZ+Otk1YzuxPpcn0mJ+KtJn0Du6tQFioR7Sak8qkfMernIYX+RoZ07RXAi3gPn7wEKT+ztxNEsaBMCadeqzQc50GArkAqUXstX3MReVYj8IMgjiGclqEgWdL3RXgRebU1Xob3+H4vIXwOUuuoIQJz9jDSnOQdH851PPAf4MCQtEWQRL4lHo6vQoob1pbQhm9QvFnv2eIhpKacF4IZ7HHMG5WW7AU/JA+fcL4EMQspjBfGoriN8EJnw8SvkEzrMHEzufs6gsQbSMz4Ez6cawKSyX1KSNeeRIIlvGhB04luFJ5G37gSaUQWJi7GW1+b8eQRXp0PQYxG7NejQ2Lt80pwoa1SamCYeAmpABk1bFEamB/VZ+uQ6rI/IpyKxa8DF+ahFZ+ARjFhK1IdYFeIYzbg3Yx/Gh5DX70SRByJQgmjAN8yxBmYKLFF5iipYFuIY7YiYXftEZ2TJGKbvxhxCuaLC5RwEUYG893A/3o89hbCrbqrkT9eIfx6Z/cjdZ684HKlseYEr9LVXUgkUdDYhNQYaS7BBfZd4ME0fw/ScXcZwXXY8xM3IOW+7yX/1qzHIH6JryKmpyDxJSQ/YoYHbfwWxJHpJ8oi/pzTRTEtQZz3fuU3WeRfWbgvXIuUpv94iHP2bcQce0iOxw1B3AEfz0VA9EIQ5xFA1cA06FTjLKf08CJ9h6YGRRCPEr0mSpnwT7W5/wFvUVo9MQWJJz9ZaRRBoRmpO+VFk/g0EtJ4m4/XM6UI340dhJuXkw9SSOTiUgIqt50G7UrDfozcy8gfqQgmaxNzriam0wivQuE3kUzZKEs/Xjb37lC5vtogBuHwf1dJt06RbRbLlDT5gA/nqkR8ZkFXF34YCd/1gh/hb6Lp5yn9qKJCox7v/ieveArJyfCCS5A8HN8J4mDE/hVGrZ8bgDuLUD3OhiC+Q2Yzjx3AtX4HaCzSF3An4sS92oe5sZCIjqClvUsRs5YXEluMf9VHjyCaxRtLDb/Be5Z1rkJoN37mUYCOszuzu19ka2KaDPweyVoNGvdQPFmmuUpnD9K/mcfvjfwGNadB4hvATIILJEghGcsN5F/HaLzS4K4NcD4SSgP+J7mXO/ggknx3cZrNIunhWm5U57yd3Q3pe+YrmL3WspHmd6PXd8wehNuCt5Ij3YR4gLqvoARPC6lpFHQjsbORWmgzfRaO+oKDtFR4Sq3pXDBLabmn+0EQlYodpxM8XlQvViliHdm1Q/XT/rqMcOLsP0eAfXEDwPFIgluQAQEvIYX5vGRaXwQ8iZRf6YkdHq/lE+rTU+s1PAo5vfFvpGueF0xW73yQsBDT3aKAx2lRz+1vPp5zTT//v1oJEl6S6E4D/kI/PrlsWPtniKc+aKxCojh2UJr4JtllLj+nNhc/pNjziG5IayExm3CyrRcDf/J47E1pzAAv+6DxmurjV9Zzvn4tK+BPtvucH3gUMYX6RQ7ZlBS6D/itxzF+jnRq9EwQ1yIlGYJGAsl12FCiG9KdiPMy2xfubh/GvJxoO/kLCRMYFdJYF+MtTHsG7495fyKCc+nq5bQHrsZb6ZXeeJDsG2ydg1QjyBWj6adMUiaC+CK7i7kFCRv4b6S/QynieXJ3FP5SHecVT+A9kkbDX9STnWmxr3fw1B7/Xgqs1VMaaSSB84GOPM6xUmmf2WKHIomUh7GOBc7MlSCOIrz6QJfnoYZHHV2I82pnjsd1IOGYqz2MuQIJabX1u5pRSwtTW/0d8FOPx/4AGNdjI7hfP76iEAq/4vHYFFKxuinH4/6B96KpNwHzsyWIqUhXuDB6BNxB+H16w8RivDvh6hHHYi5252eQloPr9TuaES8i9ZPCxJXA2x6OG4GYKLsDSm4j3PIsGt6FgvPILfKsRWmMT3kc87tIcEOuKKePXjS9CaIOCWcdG8IEPoKER5YqHiD/CKKVwAIkLHNtP1rDKUrz0+TQP35fgDGbkbBCL0EDRyMJTiDOy7P0IywK/BiYAzybxXcfQ5Ik81mbSSQYZruHY+eRpsFQrBdZ3AkcGsLEva0WuVOiC6MZSWn3A11K07pfkcXBSqp0kdjuF5GkrDb9Pmatmd1ToLGXKK3SSwOYi5EomZeRyJW5+NicXiMwvAZ8WJH8cUhL4jr1/jYhoeh/RkxEfpiFVwLfw1uHxUuQKMqH0xHEdfhfLCwdGhHHSEORP/h0mdTdGtmFHs0JmbBDbRCP6nfOM9qVNra1gNdwHVIT56gcjxukiG2BMkUsQnxVl+nHGnl0KYvJI+rf3UUUg0osvQUJ4/5SjscZ6tilqNaq3RvamYSTvewiTttVJboQKpGklbv0OxE5bEdqEz1Z4OtIIQ2GvPQ23g8J6uh+ly5HzLTb9eMtKiQIvn3BFXgzN0+iRy6HiWTBhlXl88v4U3gtqniJ3bbiYoIR8PcLiW1IJ8KDkYqufd1PmPe0Bu8F3i5kz255v0ByJq6jMHlERhGvjVJd8yhyOAtvoa9fQ4XmxxDHxtlKDQoKMaQeyoMFnrRl6ubtDA/cyOL/LCW19Zx8CwlJ3FyEi/+viAmrZ4XZvkKgK3h/OZD71NwmIvQydypN9Un6r8OzC3EoVtO3HdjpcW6H/M1UvwOGI8lKubzEFby/x3AjYmpajJiJj0BK49QQbEe9SsSn09OU8qYas9D+xW4TcHUfz38zUpuqNYtzDaQ4k3gfRpKdTyO37ndlSDmaXxvnnKv9XBoaJSz1WgGP4fYg1TDGy/Xaun/2JiwzR63ApTiDarw8Exep+mr//wAQOhTMQf959AAAAABJRU5ErkJggg==";
+
+        function applyLogos(root) {
+            (root || document).querySelectorAll('img[data-amsalem-logo]').forEach(img => {
+                img.src = AMSALEM_LOGO;
+            });
+        }
+        applyLogos();
 
         const finalDate = new Date("2026-07-19T22:00:00+03:00").getTime();
         let isTimeUp = false;
@@ -597,7 +612,7 @@
 
                 const btn = document.getElementById("submitBtn");
                 const btnTextEl = document.getElementById("btnText");
-                if (btn && !btn.classList.contains('success-state')) {
+                if (btn && btnTextEl && !btn.classList.contains('success-state')) {
                     btn.disabled = true;
                     btnTextEl.innerText = "ההצבעה נסגרה";
                     const btnIconEl = document.getElementById("btnIcon");
@@ -623,6 +638,11 @@
         if (!isTimeUp) {
             timerInterval = setInterval(updateCountdown, 1000);
         }
+
+        // סנכרון מחדש של השעון בחזרה לטאב (מובייל שנרדם)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && !isTimeUp) updateCountdown();
+        });
 
         let hasInteractedWithScores = false;
 
@@ -657,7 +677,8 @@
             const penaltySection = document.getElementById('penaltySection');
 
             if (scoreES === scoreAR && (hasInteractedWithScores || forceShow)) {
-                penaltySection.style.maxHeight = '200px';
+                // גובה דינמי - מונע חיתוך של האזור במסכים צרים
+                penaltySection.style.maxHeight = penaltySection.scrollHeight + 40 + 'px';
                 penaltySection.style.opacity = '1';
                 penaltySection.style.marginTop = '1.25rem'; 
             } else {
@@ -688,7 +709,7 @@
         });
 
         function escapeHtml(unsafe) {
-            return (unsafe || "").replace(/[&<>"']/g, function(m) {
+            return String(unsafe ?? "").replace(/[&<>"']/g, function(m) {
                 switch (m) {
                     case '&': return '&amp;';
                     case '<': return '&lt;';
@@ -790,6 +811,7 @@
         function renderSuccessCard(payload) {
             const container = document.getElementById('ticket-container');
             const safeName = escapeHtml((payload.fullName || "").split(' ')[0]);
+            const ticketId = escapeHtml(payload.ticketId || Date.now().toString().slice(-8));
             let penaltyText = "";
             if (payload.scoreA === payload.scoreB && payload.penaltyWinner) {
                 penaltyText = `<div class="mt-4 text-sm font-bold text-slate-500 bg-slate-100 py-2 px-4 rounded-full inline-block border border-slate-200">מנצחת בפנדלים: <span class="text-brand-primary">${escapeHtml(payload.penaltyWinner)}</span></div>`;
@@ -828,9 +850,9 @@
 
                     <div class="w-full max-w-xs mx-auto mt-auto relative z-10 pt-4 border-t border-dashed border-slate-200">
                         <div class="barcode-mock rounded"></div>
-                        <div class="text-[10px] text-slate-400 mt-2 tracking-widest font-mono">ID: ${escapeHtml(payload.ticketId) || Date.now().toString().slice(-8)}</div>
+                        <div class="text-[10px] text-slate-400 mt-2 tracking-widest font-mono">ID: ${ticketId}</div>
                         <!-- 4. לוגו אמסלם בתוך כרטיס ההצלחה -->
-                        <img src="Amsalem_Logo NO SLOGAN (10).png" alt="Amsalem" class="h-5 w-auto mx-auto mt-3 opacity-50 grayscale" onerror="this.style.display='none'">
+                        <img data-amsalem-logo alt="Amsalem" class="h-5 w-auto mx-auto mt-3 opacity-50 grayscale">
                     </div>
 
                     <!-- כפתור הורדת PDF -->
@@ -844,9 +866,11 @@
                     </button>
                 </div>
             `;
+
+            applyLogos(container);
         }
 
-        // פונקציה חדשה ליצירת ה-PDF
+        // ייצור כרטיס PDF - כרטיס לבן ממורכז על רקע כחול-לילה עם מסגרת זהב
         async function downloadPDF() {
             const ticketElement = document.querySelector('.stamp-effect');
             if (!ticketElement) return;
@@ -854,47 +878,88 @@
             const btn = document.getElementById('downloadPdfBtn');
             const originalHTML = btn.innerHTML;
             
-            // תוקן: סידור תצוגת הכפתור (ספינר וטקסט)
-            btn.innerHTML = `<div class="flex items-center justify-center gap-2 w-full"><svg class="animate-spin h-4 w-4 text-white shrink-0" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>מעבד...</span></div>`;
+            btn.innerHTML = `<div class="flex items-center justify-center gap-2 w-full"><svg class="animate-spin h-4 w-4 text-brand-gold shrink-0" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="text-brand-gold">מייצר כרטיס...</span></div>`;
             btn.disabled = true;
 
             try {
-                // המרת האלמנט לתמונה
                 const canvas = await html2canvas(ticketElement, {
-                    scale: 2, 
-                    useCORS: true, 
+                    scale: 3, // רזולוציה גבוהה (חדות מקסימלית)
+                    useCORS: true,
                     backgroundColor: '#ffffff',
-                    // תוקן: וידוא הסרת כל הטיות לפני הצילום כדי למנוע עיוות
                     onclone: function (clonedDoc) {
                         const clonedTicket = clonedDoc.querySelector('.stamp-effect');
-                        if(clonedTicket) clonedTicket.style.transform = 'none';
+                        if(clonedTicket) {
+                            // ביטול אנימציות ותזוזות
+                            clonedTicket.style.animation = 'none';
+                            clonedTicket.style.transform = 'none';
+                            clonedTicket.style.filter = 'none';
+                            clonedTicket.style.opacity = '1';
+
+                            // קיבוע רוחב קבוע לכרטיס (פותר את בעיית המתיחה בנייד)
+                            clonedTicket.style.width = '600px';
+                            clonedTicket.style.margin = '0 auto';
+
+                            // הכרטיס נשאר לבן ונקי - כפי שהוא מוצג במסך
+                            clonedTicket.style.borderRadius = '0';
+
+                            // העלמת העיגולים המטושטשים ברקע שגורמים לכתמים בצילום
+                            const blurs = clonedTicket.querySelectorAll('.blur-3xl');
+                            blurs.forEach(b => b.style.display = 'none');
+                        }
+                        
+                        // הסרת הכפתורים מהצילום
+                        const btn1 = clonedDoc.getElementById('downloadPdfBtn');
+                        if (btn1) btn1.style.display = 'none';
+                        const resetBtn = clonedDoc.querySelector('button[onclick="resetTicket()"]');
+                        if (resetBtn) resetBtn.style.display = 'none';
                     }
                 });
 
-                const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
                 
-                // יצירת PDF בגודל A4
+                // PDF אופקי (Landscape) בפורמט A5 - כמו כרטיס אמיתי
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({
-                    orientation: 'portrait',
+                    orientation: 'landscape',
                     unit: 'mm',
-                    format: 'a4'
+                    format: 'a5' 
                 });
 
                 const pdfWidth = pdf.internal.pageSize.getWidth();
-                // תוקן: הוספת שוליים (Margins) מכל הצדדים כדי שהכרטיס ייראה מרכזי ואיכותי
-                const margin = 15; 
-                const contentWidth = pdfWidth - (margin * 2);
-                const pdfHeight = (canvas.height * contentWidth) / canvas.width;
+                const pdfHeight = pdf.internal.pageSize.getHeight();
 
-                pdf.addImage(imgData, 'JPEG', margin, 20, contentWidth, pdfHeight);
+                // רקע כחול-לילה ומסגרת זהב יוקרתית סביב הכרטיס הלבן
+                pdf.setFillColor(10, 22, 40); 
+                pdf.rect(0, 0, pdfWidth, pdfHeight, 'F');
+                
+                pdf.setDrawColor(212, 175, 55); 
+                pdf.setLineWidth(1.5);
+                pdf.rect(6, 6, pdfWidth - 12, pdfHeight - 12, 'S');
+
+                // מרכוז מושלם של הכרטיס בתוך המסמך
+                const margin = 15;
+                const maxImgWidth = pdfWidth - (margin * 2);
+                const maxImgHeight = pdfHeight - (margin * 2);
+                
+                let imgWidth = maxImgWidth;
+                let imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                if (imgHeight > maxImgHeight) {
+                    imgHeight = maxImgHeight;
+                    imgWidth = (canvas.width * imgHeight) / canvas.height;
+                }
+
+                const x = (pdfWidth - imgWidth) / 2;
+                const y = (pdfHeight - imgHeight) / 2;
+
+                pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
                 pdf.save('Amsalem_Winner_Ticket.pdf');
                 
-                btn.innerHTML = '<div class="flex items-center justify-center gap-2 w-full"><span>הורד בהצלחה! ✔️</span></div>';
+                btn.innerHTML = '<div class="flex items-center justify-center gap-2 w-full"><span class="text-emerald-400 font-bold">הורד בהצלחה! ✔️</span></div>';
                 setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 3000);
             } catch (error) {
                 console.error('Error generating PDF:', error);
-                btn.innerHTML = '<div class="flex items-center justify-center gap-2 w-full"><span>שגיאה בהורדה ❌</span></div>';
+                btn.innerHTML = '<div class="flex items-center justify-center gap-2 w-full"><span class="text-red-400 font-bold">שגיאה בהורדה ❌</span></div>';
                 setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 3000);
             }
         }
@@ -904,7 +969,7 @@
 
             // הגנה חכמה: בודק אם שכחת להכניס את כתובת השרת
             if (CONFIG.WEBHOOK_URL.includes("YOUR_GOOGLE_APPS_SCRIPT") || CONFIG.WEBHOOK_URL === "PREVIEW_MODE_NO_SUBMISSION") {
-                showMessage("שגיאה: חסרה כתובת שרת. אנא פתח את הקוד והכנס את כתובת ה-Apps Script שלך בשורה 318.", "error");
+                showMessage("שגיאה: חסרה כתובת שרת. אנא פתח את הקוד והכנס את כתובת ה-Apps Script שלך.", "error");
                 return;
             }
 
@@ -942,9 +1007,9 @@
             btnText.textContent = 'מייצר כרטיס הגרלה...';
 
             const payload = {
-                fullName: document.getElementById('fullName').value,
+                fullName: document.getElementById('fullName').value.trim(),
                 phone: phoneKey,
-                department: document.getElementById('department').value,
+                department: document.getElementById('department').value.trim(),
                 scoreA: scoreES, 
                 scoreB: scoreAR, 
                 penaltyWinner: (scoreES === scoreAR && penaltyWinnerNode) ? penaltyWinnerNode.value : '',
@@ -978,6 +1043,7 @@
                     const storedPayload = { ...payload };
                     storedPayload.phone = '******' + phoneKey.slice(-4);
                     delete storedPayload.userAgent;
+                    delete storedPayload.honeypot;
                     try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(storedPayload)); } catch(storageError) {}
 
                     shootConfetti(); 
@@ -1013,7 +1079,11 @@
         });
 
         function resetFormState() {
-            document.querySelectorAll('input, button:not(.btn-submit)').forEach(el => el.disabled = false);
+            document.querySelectorAll('input, button:not(.btn-submit)').forEach(el => {
+                // לא מחזירים לפעולה כפתורי ניקוד אם הזמן עבר
+                if (isTimeUp && el.classList && el.classList.contains('btn-action')) return;
+                el.disabled = false;
+            });
             if (!isTimeUp) {
                 submitBtn.disabled = false;
                 btnText.textContent = 'זה הניחוש שלי';
