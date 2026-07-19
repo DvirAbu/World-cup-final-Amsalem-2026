@@ -453,33 +453,7 @@
                                 <span>הניחוש מתייחס לתוצאה בסיום המשחק, לאחר 90 דקות, או לאחר 120 דקות במקרה של הארכה. שערי הפנדלים אינם נספרים.</span>
                             </div>
                         </div>
-
-                        <div id="penaltySection" class="max-w-lg mx-auto transition-all duration-500 overflow-hidden relative z-10" style="max-height: 0; opacity: 0; margin-top: 0;">
-                            <div class="bg-gradient-to-r from-slate-50 to-white border-2 border-brand-primary/30 shadow-[0_4px_15px_rgba(27,176,206,0.15)] rounded-2xl p-4 md:p-5 text-center mt-5">
-                                <p class="text-xs sm:text-sm md:text-base font-bold text-slate-800 mb-3 flex items-center justify-center gap-2">
-                                    <span class="relative flex h-3 w-3">
-                                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
-                                      <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-primary"></span>
-                                    </span>
-                                    במצב של תיקו, מי תנצח בפנדלים?
-                                </p>
-                                <div class="flex justify-center gap-2 sm:gap-4">
-                                    <label class="cursor-pointer flex-1">
-                                        <input type="radio" name="penaltyWinner" value="ספרד" class="peer sr-only" id="penES">
-                                        <div class="px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-200 peer-checked:border-brand-primary peer-checked:bg-brand-primary/10 font-bold text-slate-500 peer-checked:text-brand-primary hover:bg-slate-50 transition-all text-sm sm:text-base">
-                                            ספרד
                                         </div>
-                                    </label>
-                                    <label class="cursor-pointer flex-1">
-                                        <input type="radio" name="penaltyWinner" value="ארגנטינה" class="peer sr-only" id="penAR">
-                                        <div class="px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-200 peer-checked:border-brand-primary peer-checked:bg-brand-primary/10 font-bold text-slate-500 peer-checked:text-brand-primary hover:bg-slate-50 transition-all text-sm sm:text-base">
-                                            ארגנטינה
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="ticket-divider-wrapper bg-slate-50">
                         <div class="ticket-hole-left bg-[#ebf4fa]"></div>
@@ -532,15 +506,11 @@
                                 </li>
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-brand-primary font-bold mt-0.5">3.</span>
-                                    <span class="leading-snug">במקרה של ניחוש תוצאת תיקו, יש לבחור גם את זהות הנבחרת שתנצח בדו־קרב הפנדלים. משתתפים שינחשו נכונה הן את תוצאת התיקו המדויקת והן את זהות המנצחת בפנדלים, יקבלו עדיפות על פני משתתפים שניחשו את אותה תוצאת תיקו בלבד.</span>
-                                </li>
-                                <li class="flex items-start gap-2.5">
-                                    <span class="text-brand-primary font-bold mt-0.5">4.</span>
                                     <span class="leading-snug">אם יהיו מספר מנחשים זכאים, תיערך ביניהם הגרלה חגיגית לקביעת הזוכה.</span>
                                 </li>
                                 <li class="flex items-start gap-2.5">
-                                    <span class="text-brand-primary font-bold mt-0.5">5.</span>
-                                    <span class="leading-snug font-bold text-brand-dark">ההשתתפות והזכייה מותנות בנוכחות בהקרנת המשחק ובמעמד הכרזת הזוכה או עריכת ההגרלה.</span>
+                                    <span class="text-brand-primary font-bold mt-0.5">4.</span>
+                                    <span class="leading-snug font-bold text-brand-dark">ההשתתפות והזכייה מותנות בנוכחות בהקרנת המשחק ובמעמד הכרזת הזוכה או עריכת ההגרלה, למעט עובדי אמסלם בשלוחות.</span>
                                 </li>
                             </ul>
                         </div>
@@ -644,11 +614,8 @@
             if (!document.hidden && !isTimeUp) updateCountdown();
         });
 
-        let hasInteractedWithScores = false;
-
         function adjustScore(team, change) {
             if (isTimeUp) return;
-            hasInteractedWithScores = true;
 
             const input = document.getElementById(team === 'es' ? 'scoreES' : 'scoreAR');
             const display = document.getElementById(team === 'es' ? 'displayES' : 'displayAR');
@@ -667,25 +634,6 @@
             void display.offsetWidth;
             display.classList.add('pulse-anim');
             setTimeout(() => { display.classList.remove('pulse-anim'); }, 200);
-
-            handleTieState();
-        }
-
-        function handleTieState(forceShow = false) {
-            const scoreES = parseInt(document.getElementById('scoreES').value, 10) || 0;
-            const scoreAR = parseInt(document.getElementById('scoreAR').value, 10) || 0;
-            const penaltySection = document.getElementById('penaltySection');
-
-            if (scoreES === scoreAR && (hasInteractedWithScores || forceShow)) {
-                // גובה דינמי - מונע חיתוך של האזור במסכים צרים
-                penaltySection.style.maxHeight = penaltySection.scrollHeight + 40 + 'px';
-                penaltySection.style.opacity = '1';
-                penaltySection.style.marginTop = '1.25rem'; 
-            } else {
-                penaltySection.style.maxHeight = '0';
-                penaltySection.style.opacity = '0';
-                penaltySection.style.marginTop = '0';
-            }
         }
 
         function resetTicket() {
@@ -694,7 +642,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            handleTieState();
             const savedTicket = localStorage.getItem(CONFIG.STORAGE_KEY);
             if (savedTicket) {
                 try {
@@ -812,10 +759,6 @@
             const container = document.getElementById('ticket-container');
             const safeName = escapeHtml((payload.fullName || "").split(' ')[0]);
             const ticketId = escapeHtml(payload.ticketId || Date.now().toString().slice(-8));
-            let penaltyText = "";
-            if (payload.scoreA === payload.scoreB && payload.penaltyWinner) {
-                penaltyText = `<div class="mt-4 text-sm font-bold text-slate-500 bg-slate-100 py-2 px-4 rounded-full inline-block border border-slate-200">מנצחת בפנדלים: <span class="text-brand-primary">${escapeHtml(payload.penaltyWinner)}</span></div>`;
-            }
 
             container.innerHTML = `
                 <div class="bg-white rounded-3xl p-8 text-center stamp-effect relative overflow-hidden min-h-[450px] flex flex-col items-center justify-center">
@@ -845,7 +788,6 @@
                                 <div class="text-4xl font-black text-brand-dark">${escapeHtml(String(payload.scoreB))}</div>
                             </div>
                         </div>
-                        ${penaltyText}
                     </div>
 
                     <div class="w-full max-w-xs mx-auto mt-auto relative z-10 pt-4 border-t border-dashed border-slate-200">
@@ -980,14 +922,6 @@
 
             const scoreES = parseInt(document.getElementById('scoreES').value, 10) || 0;
             const scoreAR = parseInt(document.getElementById('scoreAR').value, 10) || 0;
-            const penaltyWinnerNode = document.querySelector('input[name="penaltyWinner"]:checked');
-
-            if (scoreES === scoreAR && !penaltyWinnerNode) {
-                handleTieState(true);
-                showMessage("בחרת בתוצאת תיקו. אנא סמן/י איזו נבחרת תנצח בפנדלים.", "error");
-                return;
-            }
-
             if (document.getElementById('hp_field').value !== "") return;
 
             let phoneKey = document.getElementById('phone').value.replace(/\D/g, "");
@@ -1012,7 +946,7 @@
                 department: document.getElementById('department').value.trim(),
                 scoreA: scoreES, 
                 scoreB: scoreAR, 
-                penaltyWinner: (scoreES === scoreAR && penaltyWinnerNode) ? penaltyWinnerNode.value : '',
+                penaltyWinner: '', // הוסר ניחוש מנצחת בפנדלים - השדה נשמר ריק לתאימות עם גיליון התוצאות
                 honeypot: document.getElementById('hp_field').value,
                 userAgent: navigator.userAgent
             };
