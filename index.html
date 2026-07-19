@@ -755,7 +755,10 @@
             messageArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+        let lastTicketData = null;
+
         function renderSuccessCard(payload) {
+            lastTicketData = payload;
             const container = document.getElementById('ticket-container');
             const safeName = escapeHtml((payload.fullName || "").split(' ')[0]);
             const ticketId = escapeHtml(payload.ticketId || Date.now().toString().slice(-8));
@@ -812,53 +815,91 @@
             applyLogos(container);
         }
 
-        // ייצור כרטיס PDF - כרטיס לבן ממורכז על רקע כחול-לילה עם מסגרת זהב
-        async function downloadPDF() {
-            const ticketElement = document.querySelector('.stamp-effect');
-            if (!ticketElement) return;
+        // ייצור כרטיס PDF - נבנה כרטיס ייעודי נקי לצילום
+        // (html2canvas משבש טקסט עברי עם letter-spacing, truncate וגרדיאנטים חוזרים,
+        //  לכן מצלמים גרסה פשוטה של הכרטיס במקום את הכרטיס שעל המסך)
+        function buildPdfCard(data) {
+            const name = escapeHtml(data.fullName || "");
+            const ticketId = escapeHtml(data.ticketId || "");
+            const wrap = document.createElement('div');
+            wrap.id = 'pdfCard';
+            wrap.setAttribute('dir', 'rtl');
+            wrap.style.cssText = 'position:fixed;top:0;right:-99999px;width:600px;background:#ffffff;font-family:Assistant,Arial,sans-serif;color:#1e293b;';
+            wrap.innerHTML = `
+                <div style="height:8px;background:#1bb0ce;"></div>
+                <div style="padding:36px 40px 32px;text-align:center;">
+                    <img src="${AMSALEM_LOGO}" alt="Amsalem" style="height:44px;width:auto;display:block;margin:0 auto 18px;">
+                    <div style="font-size:15px;font-weight:700;color:#64748b;margin-bottom:4px;">AMSALEM WINNER &bull; FINAL 2026</div>
+                    <div style="font-size:30px;font-weight:800;color:#0a1628;margin-bottom:6px;">הניחוש נשמר בהצלחה!</div>
+                    <div style="font-size:17px;color:#475569;margin-bottom:26px;">תודה על השתתפותך, ${name}</div>
 
+                    <div style="border:2px solid #e2e8f0;border-radius:16px;padding:22px 20px;background:#f8fafc;margin-bottom:26px;">
+                        <div style="font-size:13px;font-weight:700;color:#94a3b8;margin-bottom:14px;">הניחוש שלך לגמר</div>
+                        <table style="width:100%;border-collapse:collapse;" dir="rtl"><tr>
+                            <td style="width:42%;text-align:center;">
+                                <div style="font-size:16px;font-weight:700;color:#475569;margin-bottom:2px;">ספרד</div>
+                                <div style="font-size:46px;font-weight:800;color:#0a1628;line-height:1;">${escapeHtml(String(data.scoreA))}</div>
+                            </td>
+                            <td style="width:16%;text-align:center;font-size:26px;font-weight:800;color:#cbd5e1;">&ndash;</td>
+                            <td style="width:42%;text-align:center;">
+                                <div style="font-size:16px;font-weight:700;color:#475569;margin-bottom:2px;">ארגנטינה</div>
+                                <div style="font-size:46px;font-weight:800;color:#0a1628;line-height:1;">${escapeHtml(String(data.scoreB))}</div>
+                            </td>
+                        </tr></table>
+                    </div>
+
+                    <div id="pdfBarcode" style="height:34px;margin:0 60px 10px;font-size:0;line-height:0;white-space:nowrap;overflow:hidden;text-align:center;"></div>
+                    <div style="font-size:12px;color:#94a3b8;" dir="ltr">ID: ${ticketId}</div>
+                    <div style="font-size:12px;color:#94a3b8;margin-top:14px;border-top:1px dashed #e2e8f0;padding-top:12px;">פעילות פנימית לעובדי אמסלם בלבד &bull; חגיגת גמר המונדיאל 2026</div>
+                </div>`;
+            document.body.appendChild(wrap);
+            // ברקוד מפסים אמיתיים (divs) - גרדיאנט חוזר לא נתמך ב-html2canvas
+            const bc = wrap.querySelector('#pdfBarcode');
+            let seed = 0;
+            (ticketId || 'AW').split('').forEach(c => seed += c.charCodeAt(0));
+            for (let i = 0; i < 60; i++) {
+                const bar = document.createElement('span');
+                const w = 1 + ((seed + i * 7) % 3);
+                bar.style.cssText = `display:inline-block;height:34px;width:${w}px;background:#334155;margin-left:2px;`;
+                bc.appendChild(bar);
+            }
+            return wrap;
+        }
+
+        async function downloadPDF() {
             const btn = document.getElementById('downloadPdfBtn');
             const originalHTML = btn.innerHTML;
-            
+
+            // נתוני הכרטיס - מהזיכרון או מה-localStorage
+            let data = lastTicketData;
+            if (!data) {
+                try { data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)); } catch(e) {}
+            }
+            if (!data) return;
+
             btn.innerHTML = `<div class="flex items-center justify-center gap-2 w-full"><svg class="animate-spin h-4 w-4 text-brand-gold shrink-0" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="text-brand-gold">מייצר כרטיס...</span></div>`;
             btn.disabled = true;
 
+            let pdfCard = null;
             try {
-                const canvas = await html2canvas(ticketElement, {
-                    scale: 3, // רזולוציה גבוהה (חדות מקסימלית)
+                // המתנה לטעינת הפונטים לפני הצילום - מונע שיבוש אותיות עבריות
+                if (document.fonts && document.fonts.ready) {
+                    try { await document.fonts.ready; } catch(e) {}
+                }
+
+                pdfCard = buildPdfCard(data);
+                await new Promise(r => setTimeout(r, 150)); // מאפשר לדפדפן לפרוס את הכרטיס
+
+                const canvas = await html2canvas(pdfCard, {
+                    scale: 3,
                     useCORS: true,
                     backgroundColor: '#ffffff',
-                    onclone: function (clonedDoc) {
-                        const clonedTicket = clonedDoc.querySelector('.stamp-effect');
-                        if(clonedTicket) {
-                            // ביטול אנימציות ותזוזות
-                            clonedTicket.style.animation = 'none';
-                            clonedTicket.style.transform = 'none';
-                            clonedTicket.style.filter = 'none';
-                            clonedTicket.style.opacity = '1';
-
-                            // קיבוע רוחב קבוע לכרטיס (פותר את בעיית המתיחה בנייד)
-                            clonedTicket.style.width = '600px';
-                            clonedTicket.style.margin = '0 auto';
-
-                            // הכרטיס נשאר לבן ונקי - כפי שהוא מוצג במסך
-                            clonedTicket.style.borderRadius = '0';
-
-                            // העלמת העיגולים המטושטשים ברקע שגורמים לכתמים בצילום
-                            const blurs = clonedTicket.querySelectorAll('.blur-3xl');
-                            blurs.forEach(b => b.style.display = 'none');
-                        }
-                        
-                        // הסרת הכפתורים מהצילום
-                        const btn1 = clonedDoc.getElementById('downloadPdfBtn');
-                        if (btn1) btn1.style.display = 'none';
-                        const resetBtn = clonedDoc.querySelector('button[onclick="resetTicket()"]');
-                        if (resetBtn) resetBtn.style.display = 'none';
-                    }
+                    width: 600,
+                    windowWidth: 600
                 });
 
                 const imgData = canvas.toDataURL('image/jpeg', 0.95);
-                
+
                 // PDF אופקי (Landscape) בפורמט A5 - כמו כרטיס אמיתי
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({
@@ -903,6 +944,8 @@
                 console.error('Error generating PDF:', error);
                 btn.innerHTML = '<div class="flex items-center justify-center gap-2 w-full"><span class="text-red-400 font-bold">שגיאה בהורדה ❌</span></div>';
                 setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 3000);
+            } finally {
+                if (pdfCard) pdfCard.remove();
             }
         }
 
